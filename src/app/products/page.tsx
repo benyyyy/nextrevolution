@@ -1,12 +1,19 @@
 import React from 'react'
+import Link from 'next/link'
 
-export default function page() {
+
+export default function ProductList() {
+  const productId=100;
+
+  
   return (
     <>
-        <h1>product 1</h1>
-        <h1>product 2</h1>
-        <h1>product 3</h1>
-        <h1>product 4</h1>
+     <Link href="/" className='bg-yellow-500'>home</Link>
+        <h1><Link href="/products/1">product 1</Link></h1>
+        <h1><Link href="/products/2">product 2</Link></h1>
+        <h1><Link href="/products/3" replace>product 3</Link></h1>
+        <h1><Link href={`/products/${productId}`}>product {productId}</Link></h1>
+       
     </>
   )
 }

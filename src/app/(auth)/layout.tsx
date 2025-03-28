@@ -1,14 +1,44 @@
+"use client";
 
-export default function RootLayout({ children} : {
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+
+const navLinks = [
+  { name: "Register", href: "/register" },
+  { name: "Login", href: "/login" },
+  { name: "Forgot Password", href: "/forget-password" },
+];
+
+export default function AuthLayout({
+  children,
+}: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const [input, setInput] = useState("");
   return (
-    <html lang="en">
-      <body>
-     <header className="bg-blue-200">auth header</header>
-        {children}
-  <footer className="bg-blue-200">auth footer</footer>
-      </body>
-    </html>
+    <div>
+      <div>
+        <input value={input} onChange={(e) => setInput(e.target.value)} />
+      </div>
+      {navLinks.map((link) => {
+        const isActive =
+          pathname === link.href ||
+          (pathname.startsWith(link.href) && link.href !== "/");
+
+        return (
+          <Link
+            href={link.href}
+            key={link.name}
+            className={isActive ? "font-bold text-green-400 mr-4" : "text-blue-500 mr-4"}
+          >
+            {link.name}
+          </Link>
+        );
+      })}
+      {children}
+    </div>
   );
 }
